@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import es.lavanda.lib.common.model.MediaIDTO;
 import es.lavanda.lib.common.model.MediaODTO;
@@ -48,8 +49,10 @@ public class TMDBStrategyFilm implements TMDBStrategy {
         mediaODTO.setTitleOriginal(firstResult.getOriginalTitle());
         mediaODTO.setIdOriginal(String.valueOf(firstResult.getId()));
         mediaODTO.setImage(TmdbUtil.getW780Image(firstResult.getPosterPath()));
-        mediaODTO.setReleaseDate(
-                LocalDate.parse(firstResult.getReleaseDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        if (StringUtils.hasText(firstResult.getReleaseDate())) {
+            mediaODTO.setReleaseDate(
+                    LocalDate.parse(firstResult.getReleaseDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        }
         mediaODTO.setBackdropImage(TmdbUtil.getOriginalImage(firstResult.getBackdropPath()));
         mediaODTO.setVoteAverage(firstResult.getVoteAverage());
         mediaODTO.setOverview(firstResult.getOverview());

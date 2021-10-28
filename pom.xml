@@ -135,6 +135,7 @@
 						<image>registry-1.docker.io/lavandadelpatio/tmdb</image>
 						<tags>
 							<tag>${project.version}</tag>
+							<tag>${project.version}-${TRIMMED_SHA}</tag>
 							<tag>latest</tag>
 						</tags>
 					</to>

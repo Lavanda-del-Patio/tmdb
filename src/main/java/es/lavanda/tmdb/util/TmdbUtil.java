@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import es.lavanda.tmdb.model.tmdb.search.TMDBSearchDTO;
+import es.lavanda.lib.common.model.tmdb.search.TMDBSearchDTO;
 import lombok.extern.slf4j.Slf4j;
 
 // @Component

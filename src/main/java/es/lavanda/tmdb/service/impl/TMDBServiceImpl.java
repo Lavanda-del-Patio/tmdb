@@ -20,14 +20,13 @@ import java.util.stream.Collectors;
 
 import es.lavanda.lib.common.model.MediaIDTO;
 import es.lavanda.lib.common.model.MediaIDTO.Type;
+import es.lavanda.lib.common.model.TelegramFilebotExecutionIDTO;
 import es.lavanda.tmdb.exception.TMDBException;
 import es.lavanda.tmdb.model.internal.Tripla;
 import es.lavanda.tmdb.model.tmdb.movies.Call1ResultsMovies;
 import es.lavanda.tmdb.model.tmdb.movies.Call1SearchMovie;
 import es.lavanda.tmdb.model.tmdb.movies.Call2MovieById;
 import es.lavanda.tmdb.model.tmdb.movies.Call3MovieByCast;
-import es.lavanda.tmdb.model.tmdb.search.TMDBResultDTO;
-import es.lavanda.tmdb.model.tmdb.search.TMDBSearchDTO;
 import es.lavanda.tmdb.model.tmdb.shows.Call1ResultsShows;
 import es.lavanda.tmdb.model.tmdb.shows.Call1SeachTVShows;
 import es.lavanda.tmdb.model.tmdb.shows.Call2ShowByID;
@@ -61,7 +60,7 @@ public class TMDBServiceImpl implements TMDBService {
 	private TMDBStrategyShow tmdbStrategyShow;
 
 	@Override
-	public void analyze(MediaIDTO mediaDTO,QueueType type) throws TMDBException {
+	public void analyze(MediaIDTO mediaDTO, QueueType type) throws TMDBException {
 		// https://api.themoviedb.org/3/search/multi?api_key=1012d785312735b8039a9f7f172354cb&language=en-US&query=wonder%20woman&page=1&include_adult=true
 		// String uriMultiSearch = getMultiSearchURL(mediaDTO.getCleanTitle());
 		// TMDBSearchDTO result =
@@ -83,7 +82,7 @@ public class TMDBServiceImpl implements TMDBService {
 					mediaDTO.getPossibleType());
 		}
 		if (optStrategy.isPresent()) {
-			optStrategy.get().execute(mediaDTO,type);
+			optStrategy.get().execute(mediaDTO, type);
 		}
 		// .findFirst()
 		// .orElseThrow(() -> new TMDBException("Not similarity found on " +
@@ -425,6 +424,17 @@ public class TMDBServiceImpl implements TMDBService {
 			}
 		}
 		return costs[s2.length()];
+	}
+
+	@Override
+	public void analyze(TelegramFilebotExecutionIDTO telegramFilebotExecutionIDTO) throws TMDBException {
+		TMDBStrategy optStrategy;
+		if (TelegramFilebotExecutionIDTO.Type.FILM.equals(telegramFilebotExecutionIDTO.getType())) {
+			optStrategy = tmdbStrategyFilm;
+		} else {
+			optStrategy = tmdbStrategyShow;
+		}
+		optStrategy.execute(telegramFilebotExecutionIDTO);
 	}
 
 }

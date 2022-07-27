@@ -14,9 +14,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import es.lavanda.lib.common.model.MediaIDTO.Type;
-import es.lavanda.tmdb.model.tmdb.search.TMDBResultDTO;
-import es.lavanda.tmdb.model.tmdb.search.TMDBSearchDTO;
-import es.lavanda.tmdb.model.tmdb.search.TMDBResultDTO.MediaTypeEnum;
+import es.lavanda.lib.common.model.tmdb.search.TMDBResultDTO;
+import es.lavanda.lib.common.model.tmdb.search.TMDBSearchDTO;
+import es.lavanda.lib.common.model.tmdb.search.TMDBResultDTO.MediaTypeEnum;
 import es.lavanda.tmdb.util.TmdbUtil;
 
 @ExtendWith(MockitoExtension.class)

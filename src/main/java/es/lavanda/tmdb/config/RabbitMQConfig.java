@@ -16,7 +16,10 @@ public class RabbitMQConfig {
 
     public static final String QUEUE_MESSAGES_SHOWS = "agent-tmdb-feed-shows";
     public static final String QUEUE_MESSAGES_SHOWS_DLQ = "agent-tmdb-feed-shows-dlq";
-    
+
+    public static final String QUEUE_TELEGRAM_QUERY_TMDB = "telegram-query-tmdb";
+    public static final String QUEUE_TELEGRAM_QUERY_TMDB_DLQ = "telegram-query-tmdb-dlq";
+
     public static final String EXCHANGE_MESSAGES = "lavandadelpatio-exchange";
 
     @Bean
@@ -38,6 +41,22 @@ public class RabbitMQConfig {
     @Bean
     Queue deadLetterQueue() {
         return QueueBuilder.durable(QUEUE_MESSAGES_DLQ).build();
+    }
+
+    @Bean
+    Binding bindingTelegramShows() {
+        return BindingBuilder.bind(messagesQueue()).to(messagesExchange()).with(QUEUE_TELEGRAM_QUERY_TMDB);
+    }
+
+    @Bean
+    Queue messagesTelegramQueue() {
+        return QueueBuilder.durable(QUEUE_TELEGRAM_QUERY_TMDB).withArgument("x-dead-letter-exchange", "")
+                .withArgument("x-dead-letter-routing-key", QUEUE_TELEGRAM_QUERY_TMDB_DLQ).build();
+    }
+
+    @Bean
+    Queue deadLetterTelegramQueue() {
+        return QueueBuilder.durable(QUEUE_TELEGRAM_QUERY_TMDB_DLQ).build();
     }
 
     @Bean

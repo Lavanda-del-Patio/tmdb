@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,6 +26,8 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @Slf4j
 public class TMDBStrategyShow implements TMDBStrategy {
+
+    private static final Pattern PATTERN_SHOW_1 = Pattern.compile("(.*).S0(.*)");
 
     @Autowired
     private ProducerService producerService;
@@ -66,7 +70,7 @@ public class TMDBStrategyShow implements TMDBStrategy {
         String search = getShortPath(telegramFilebotExecutionIDTO.getPath());
         TMDBSearchDTO searchs = tmdbServiceShow.searchShow(search,
                 null);
-        log.info("Results of the search {}", searchs.getResults());
+        log.info("Searched {} with results {}", search, searchs.getResults());
         // if (Boolean.FALSE.equals(searchs.getResults().isEmpty())) {
         TelegramFilebotExecutionODTO telegramFilebotExecutionODTO = createTelegramFilebotExecutionODTO(searchs,
                 telegramFilebotExecutionIDTO.getId());
@@ -89,14 +93,22 @@ public class TMDBStrategyShow implements TMDBStrategy {
     private String getShortPath(String filebotPath) {
         Path path = Path.of(filebotPath);
         log.info("Parent path {}", path.getFileName().toString());
+        String folderName = path.getFileName().toString();
         // "/Users/luiscarlos/Documents/Github/LavandaDelPatio/filebot-executor/src/main/resources/filebot/El
         // incidente [BluRay 1080p][DTS 5.1 Castellano DTS-HD 5.1-Ingles+Subs][ES-EN]";
-        if (path.getFileName().toString().contains("[") && path.getFileName().toString().contains("]")) {
-            return path.getFileName().toString().split("\\[")[0];
-        } else if (path.getFileName().toString().contains("(") && path.getFileName().toString().contains(")")) {
-            return path.getFileName().toString().split("\\(")[0];
-        } else
-            return path.getFileName().toString();
+        Matcher generalMatcher = PATTERN_SHOW_1.matcher(folderName);
+        if (folderName.contains("[") && folderName.contains("]")) {
+            return folderName.split("\\[")[0];
+        } else if (folderName.contains("(") && folderName.contains(")")) {
+            return folderName.split("\\(")[0];
+        } else if (generalMatcher.matches()) {
+            log.info("Regex {}", PATTERN_SHOW_1.pattern());
+            // System.out.println("GROUP 1: *" + generalMatcher.group(1) + "*");
+            // String fileWithDots = generalMatcher.group(1);
+            return generalMatcher.group(1).replace(".", " ");
+        } else {
+            return folderName;
+        }
     }
 
 }

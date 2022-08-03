@@ -5,7 +5,9 @@ spring:
     active: dev 
 cloud:
   aws:
+    stack:
+      auto: false
     region:
       static: eu-west-1
-    stack:
-      auto: false  
+    sns:
+      enabled: false   

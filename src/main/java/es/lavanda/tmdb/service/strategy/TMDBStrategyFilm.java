@@ -6,6 +6,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,6 +28,8 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @Slf4j
 public class TMDBStrategyFilm implements TMDBStrategy {
+
+    // private static final Pattern PATTERN_SHOW_1 = Pattern.compile("(.*?)\\.S(\\d{1,2})");
 
     @Autowired
     private ProducerService producerService;
@@ -70,7 +74,7 @@ public class TMDBStrategyFilm implements TMDBStrategy {
         log.info("Strategy Film  with telegramFilebotExecutionIDTO {}", telegramFilebotExecutionIDTO);
         String search = getShortPath(telegramFilebotExecutionIDTO.getPath());
         TMDBSearchDTO searchs = tmdbServiceFilmImpl.searchFilm(search);
-        log.info("Results of the search {}", searchs.getResults());
+        log.info("Searched {} with results {}", search, searchs.getResults());
         // if (Boolean.FALSE.equals(searchs.getResults().isEmpty())) {
         TelegramFilebotExecutionODTO telegramFilebotExecutionODTO = createTelegramFilebotExecutionODTO(searchs,
                 telegramFilebotExecutionIDTO.getId());
@@ -99,8 +103,9 @@ public class TMDBStrategyFilm implements TMDBStrategy {
             return path.getFileName().toString().split("\\[")[0];
         } else if (path.getFileName().toString().contains("(") && path.getFileName().toString().contains(")")) {
             return path.getFileName().toString().split("\\(")[0];
-        } else
+        } else {
             return path.getFileName().toString();
+        }
     }
 
 }

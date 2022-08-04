@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import es.lavanda.lib.common.model.MediaIDTO.Type;
 import es.lavanda.lib.common.model.tmdb.search.TMDBSearchDTO;
 import es.lavanda.lib.common.model.tmdb.search.TMDBResultDTO.MediaTypeEnum;
-import es.lavanda.tmdb.exception.TMDBException;
 import es.lavanda.tmdb.util.TmdbUtil;
 import lombok.extern.slf4j.Slf4j;
 

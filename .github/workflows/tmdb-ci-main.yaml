@@ -37,7 +37,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          ref: develop
+          ref: main
       - uses: luiscajl/mvn-release@main
   build-and-push-to-registry-on-main:
     runs-on: ubuntu-latest

@@ -29,6 +29,7 @@ public class TMDBStrategyShow implements TMDBStrategy {
 
     private static final Pattern PATTERN_SHOW_1 = Pattern.compile("(.*).S\\d{1,2}(.*)");
     private static final Pattern PATTERN_SHOW_2 = Pattern.compile("(.*) S\\d{1,2}(.*)");
+    private static final Pattern PATTERN_SHOW_3 = Pattern.compile("(.*).\\d{4}.S\\d{1,2}(.*)");
 
     @Autowired
     private ProducerService producerService;
@@ -99,7 +100,11 @@ public class TMDBStrategyShow implements TMDBStrategy {
         // incidente [BluRay 1080p][DTS 5.1 Castellano DTS-HD 5.1-Ingles+Subs][ES-EN]";
         Matcher matcher1 = PATTERN_SHOW_1.matcher(folderName);
         Matcher matcher2 = PATTERN_SHOW_2.matcher(folderName);
-        if (matcher1.matches()) {
+        Matcher matcher3 = PATTERN_SHOW_3.matcher(folderName);
+        if (matcher3.matches()) {
+            log.info("Regex {}", PATTERN_SHOW_3.pattern());
+            return matcher3.group(1).replace(".", " ");
+        } else if (matcher1.matches()) {
             log.info("Regex {}", PATTERN_SHOW_1.pattern());
             // System.out.println("GROUP 1: *" + matcher1.group(1) + "*");
             // String fileWithDots = generalMatcher.group(1);

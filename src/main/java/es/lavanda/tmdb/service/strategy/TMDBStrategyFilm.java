@@ -29,7 +29,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class TMDBStrategyFilm implements TMDBStrategy {
 
-    // private static final Pattern PATTERN_SHOW_1 = Pattern.compile("(.*?)\\.S(\\d{1,2})");
+    // private static final Pattern PATTERN_SHOW_1 =
+    // Pattern.compile("(.*?)\\.S(\\d{1,2})");
 
     @Autowired
     private ProducerService producerService;
@@ -96,15 +97,20 @@ public class TMDBStrategyFilm implements TMDBStrategy {
 
     private String getShortPath(String filebotPath) {
         Path path = Path.of(filebotPath);
-        log.info("Parent path {}", path.getFileName().toString());
-        // "/Users/luiscarlos/Documents/Github/LavandaDelPatio/filebot-executor/src/main/resources/filebot/El
-        // incidente [BluRay 1080p][DTS 5.1 Castellano DTS-HD 5.1-Ingles+Subs][ES-EN]";
-        if (path.getFileName().toString().contains("[") && path.getFileName().toString().contains("]")) {
-            return path.getFileName().toString().split("\\[")[0];
-        } else if (path.getFileName().toString().contains("(") && path.getFileName().toString().contains(")")) {
-            return path.getFileName().toString().split("\\(")[0];
+        String filename = path.getFileName().toString();
+        log.info("Parent path or filename {}", filename);
+        if (filename.contains("[") && filename.contains("]")) {
+            log.info("Regex [");
+            return filename.split("\\[")[0];
+        } else if (filename.contains("(") && filename.contains(")")) {
+            log.info("Regex (");
+            return filename.split("\\(")[0];
+        } else if (filename.endsWith(".mkv")) {
+            log.info("Regex .mkv");
+            return filename.split("\\.")[0];
         } else {
-            return path.getFileName().toString();
+            log.info("Without regex");
+            return filename;
         }
     }
 

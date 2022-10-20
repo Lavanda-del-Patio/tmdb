@@ -30,9 +30,10 @@ public class TMDBStrategyFilmTest {
     @Disabled
     public void getStrategyWithTypeFilm() {
         TelegramFilebotExecutionIDTO telegramFilebotExecutionIDTO = new TelegramFilebotExecutionIDTO();
-        telegramFilebotExecutionIDTO.setFile("El incidente BD1080.atomixhq.net.mkv");
+        telegramFilebotExecutionIDTO.setFile("Campanilla & La Leyenda De La Bestia.mkv");
+
         telegramFilebotExecutionIDTO.setPath(
-                "/Users/luiscarlos/Documents/Github/LavandaDelPatio/filebot-executor/src/main/resources/filebot/El incidente [BluRay 1080p][DTS 5.1 Castellano DTS-HD 5.1-Ingles+Subs][ES-EN]");
+                "/Users/luiscarlos/Documents/Github/LavandaDelPatio/filebot-executor/src/main/resources/filebot/Campanilla & La Leyenda De La Bestia.mkv");
         tmdbStrategyFilm.execute(telegramFilebotExecutionIDTO);
         // TMDBSearchDTO searchDTO = new TMDBSearchDTO();
         // List<TMDBResultDTO> results = new ArrayList<>();
@@ -48,8 +49,8 @@ public class TMDBStrategyFilmTest {
     @Test
     @Disabled
     public void tesss() {
-        String path = "Peaky Blinders S05 2160p NF WEBRip DDP5.1 x264-AJP69 [RiCK]";
-        String pattern = PATTERN_SHOW_2.pattern();
+        String path = "Friends.1994.S04.1080p.Bluray.REMUX.AVC.DD.5.1-4K4U";
+        String pattern = PATTERN_SHOW_3.pattern();
         // String test = "(test1,test2)";
         // Pattern PATTERN_SHOW_1 = Pattern.compile(pattern);
         Matcher generalMatcher = Pattern.compile(pattern).matcher(path);
@@ -61,8 +62,13 @@ public class TMDBStrategyFilmTest {
                 "SHORTPATH *" + getShortPath(path, pattern) + "*");
     }
 
-    private static final Pattern PATTERN_SHOW_1 = Pattern.compile("(.*) S\\d{1,2}(.*)");
+    // private static final Pattern PATTERN_SHOW_1 = Pattern.compile("(.*)
+    // S\\d{1,2}(.*)");
+    private static final Pattern PATTERN_SHOW_1 = Pattern.compile("(.*).S\\d{1,2}(.*)");
+    private static final Pattern PATTERN_SHOW_3 = Pattern.compile("(.*).\\d{4}.S\\d{1,2}(.*)");
+
     private static final Pattern PATTERN_SHOW_2 = Pattern.compile("(.*) S\\d{1,2}(.*)");
+    // Friends.1994.S04.1080p.Bluray.REMUX.AVC.DD.5.1-4K4U
 
     private String getShortPath(String filebotPath, String pattern) {
         Path path = Path.of(filebotPath);

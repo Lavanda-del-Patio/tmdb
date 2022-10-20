@@ -70,7 +70,7 @@ jobs:
             
             Repository: ${{ github.repository }}
 
-            See on: ${{steps.open-pr.outputs.pr_url}}                    
+            See on: ${{steps.open-pr.outputs.pr_url}}             
   next-snapshot:
     needs: release-build-push-docker
     if: (github.ref == 'refs/heads/main')  && (github.event_name == 'push')  

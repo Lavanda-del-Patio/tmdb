@@ -27,9 +27,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class TMDBStrategyShow implements TMDBStrategy {
 
-    private static final Pattern PATTERN_SHOW_1 = Pattern.compile("(.*)[. ]S\\d{1,2}(.*)");
+    private static final Pattern PATTERN_SHOW_1 = Pattern.compile("(.*)(?:[. ]S\\d{1,2}.*)");
     private static final Pattern PATTERN_SHOW_3 = Pattern.compile("(.*).\\d{4}.S\\d{1,2}(.*)");
-
+    private static final Pattern PATTERN_SHOW_2 = Pattern.compile("(.*)(?:[. ]Season[. ]\\d{1,2}.*)");
     @Autowired
     private ProducerService producerService;
     @Autowired
@@ -98,7 +98,7 @@ public class TMDBStrategyShow implements TMDBStrategy {
         // "/Users/luiscarlos/Documents/Github/LavandaDelPatio/filebot-executor/src/main/resources/filebot/El
         // incidente [BluRay 1080p][DTS 5.1 Castellano DTS-HD 5.1-Ingles+Subs][ES-EN]";
         Matcher matcher1 = PATTERN_SHOW_1.matcher(folderName);
-        // Matcher matcher2 = PATTERN_SHOW_2.matcher(folderName);
+        Matcher matcher2 = PATTERN_SHOW_2.matcher(folderName);
         Matcher matcher3 = PATTERN_SHOW_3.matcher(folderName);
         if (folderName.contains("[") && folderName.contains("]")) {
             log.info("Regex  [");
@@ -112,9 +112,9 @@ public class TMDBStrategyShow implements TMDBStrategy {
         } else if (matcher1.matches()) {
             log.info("Regex {}", PATTERN_SHOW_1.pattern());
             return matcher1.group(1).replace(".", " ");
-            // else if (matcher2.matches()) {
-            // log.info("Regex {}", PATTERN_SHOW_2.pattern());
-            // return matcher2.group(1).replace(".", " ");
+        } else if (matcher2.matches()) {
+            log.info("Regex {}", PATTERN_SHOW_2.pattern());
+            return matcher2.group(1).replace(".", " ");
         } else {
             log.info("Without regex");
             return folderName;

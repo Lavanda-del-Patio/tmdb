@@ -1,4 +1,4 @@
-name: TMDB- CI
+name: TMDB - CI
 on:
   schedule:
     - cron: '0 0 * * *' 

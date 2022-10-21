@@ -26,8 +26,8 @@ public class TMDBStrategyFilmTest {
     // @Autowired
     private TMDBStrategyFilm tmdbStrategyFilm;
 
-    @Test
-    @Disabled
+    // @Test
+    // @Disabled
     public void getStrategyWithTypeFilm() {
         TelegramFilebotExecutionIDTO telegramFilebotExecutionIDTO = new TelegramFilebotExecutionIDTO();
         telegramFilebotExecutionIDTO.setFile("Campanilla & La Leyenda De La Bestia.mkv");
@@ -46,8 +46,8 @@ public class TMDBStrategyFilmTest {
         // Assertions.assertEquals(tmdbStrategyShow, strategy.get());
     }
 
-    @Test
-    @Disabled
+    // @Test
+    // @Disabled
     public void tesss() {
         String path = "Friends.1994.S04.1080p.Bluray.REMUX.AVC.DD.5.1-4K4U";
         String pattern = PATTERN_SHOW_3.pattern();

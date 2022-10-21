@@ -22,6 +22,7 @@ import es.lavanda.lib.common.model.tmdb.search.TMDBSearchDTO;
 import es.lavanda.tmdb.model.type.QueueType;
 import es.lavanda.tmdb.service.ProducerService;
 import es.lavanda.tmdb.service.impl.TMDBServiceFilm;
+import es.lavanda.tmdb.util.FileUtils;
 import es.lavanda.tmdb.util.TmdbUtil;
 import lombok.extern.slf4j.Slf4j;
 
@@ -37,6 +38,9 @@ public class TMDBStrategyFilm implements TMDBStrategy {
 
     @Autowired
     private TMDBServiceFilm tmdbServiceFilmImpl;
+
+    @Autowired
+    private FileUtils fileUtils;
 
     @Override
     public void execute(MediaIDTO mediaDTO, QueueType type) {
@@ -73,7 +77,7 @@ public class TMDBStrategyFilm implements TMDBStrategy {
     @Override
     public void execute(TelegramFilebotExecutionIDTO telegramFilebotExecutionIDTO) {
         log.info("Strategy Film  with telegramFilebotExecutionIDTO {}", telegramFilebotExecutionIDTO);
-        String search = getShortPath(telegramFilebotExecutionIDTO.getPath());
+        String search = fileUtils.getShortName(telegramFilebotExecutionIDTO.getPath());
         TMDBSearchDTO searchs = tmdbServiceFilmImpl.searchFilm(search);
         log.info("Searched {} with results {}", search, searchs.getResults());
         // if (Boolean.FALSE.equals(searchs.getResults().isEmpty())) {
@@ -93,25 +97,6 @@ public class TMDBStrategyFilm implements TMDBStrategy {
         }
         telegramFilebotExecutionODTO.setPossibleChoices(possibleChoices);
         return telegramFilebotExecutionODTO;
-    }
-
-    private String getShortPath(String filebotPath) {
-        Path path = Path.of(filebotPath);
-        String filename = path.getFileName().toString();
-        log.info("Parent path or filename {}", filename);
-        if (filename.contains("[") && filename.contains("]")) {
-            log.info("Regex [");
-            return filename.split("\\[")[0];
-        } else if (filename.contains("(") && filename.contains(")")) {
-            log.info("Regex (");
-            return filename.split("\\(")[0];
-        } else if (filename.endsWith(".mkv")) {
-            log.info("Regex .mkv");
-            return filename.split("\\.")[0];
-        } else {
-            log.info("Without regex");
-            return filename;
-        }
     }
 
 }

@@ -26,7 +26,7 @@
 		<dependency>
 			<groupId>es.lavanda</groupId>
 			<artifactId>lib-common</artifactId>
-			<version>0.0.62</version>
+			<version>0.0.64</version>
 		</dependency>
 		<!-- ================= SPRINGBOOT =================== -->
 		<dependency>

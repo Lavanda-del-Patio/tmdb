@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import es.lavanda.lib.common.model.MediaIDTO;
 import es.lavanda.lib.common.model.MediaODTO;
@@ -70,8 +71,11 @@ public class TMDBStrategyShow implements TMDBStrategy {
     public void execute(TelegramFilebotExecutionIDTO telegramFilebotExecutionIDTO) {
         log.info("Strategy Show  with telegramFilebotExecutionIDTO {}", telegramFilebotExecutionIDTO);
         String search = fileUtils.getShortName(telegramFilebotExecutionIDTO.getPath());
-        TMDBSearchDTO searchs = tmdbServiceShow.searchShow(search,
-                null);
+        TMDBSearchDTO searchs = new TMDBSearchDTO();
+        if (StringUtils.hasText(search)) {
+            searchs = tmdbServiceShow.searchShow(search,
+                    null);
+        }
         log.info("Searched {} with results {}", search, searchs.getResults());
         // if (Boolean.FALSE.equals(searchs.getResults().isEmpty())) {
         TelegramFilebotExecutionODTO telegramFilebotExecutionODTO = createTelegramFilebotExecutionODTO(searchs,

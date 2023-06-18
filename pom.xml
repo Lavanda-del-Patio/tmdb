@@ -4,7 +4,7 @@
 
 	<groupId>es.lavanda</groupId>
 	<artifactId>tmdb</artifactId>
-	<version>0.0.32</version>
+	<version>0.0.33-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>lavanda-tmdb</name>
@@ -100,7 +100,7 @@
 				</executions>
 				<configuration>
 					<from>
-						<image>openjdk:11-slim</image>
+						<image>amazoncorretto:17-alpine</image>
 						<platforms>
 							<platform>
 								<architecture>amd64</architecture>

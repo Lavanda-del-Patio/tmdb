@@ -100,7 +100,7 @@
 				</executions>
 				<configuration>
 					<from>
-						<image>openjdk:11-slim</image>
+						<image>amazoncorretto:17-alpine</image>
 						<platforms>
 							<platform>
 								<architecture>amd64</architecture>

@@ -4,7 +4,7 @@
 
 	<groupId>es.lavanda</groupId>
 	<artifactId>tmdb</artifactId>
-	<version>0.0.34</version>
+	<version>0.0.35-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>lavanda-tmdb</name>
@@ -19,7 +19,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>17</java.version>
 		<maven.compiler.target>17</maven.compiler.target>
-		<spring-cloud.version>2021.0.3</spring-cloud.version>
+        <spring-cloud.version>2022.0.3</spring-cloud.version>
 		<project.scm.id>github</project.scm.id>
 	</properties>
 	<dependencies>
@@ -89,7 +89,7 @@
 			<plugin>
 				<groupId>com.google.cloud.tools</groupId>
 				<artifactId>jib-maven-plugin</artifactId>
-				<version>3.1.1</version>
+				<version>3.3.2</version>
 				<executions>
 					<execution>
 						<phase>package</phase>
